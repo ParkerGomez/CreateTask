@@ -1,0 +1,51 @@
+var worldChampionName = getColumn("Formula One World Champions", "Name");
+var year = getColumn("Formula One World Champions", "Year");
+var team = getColumn("Formula One World Champions", "Team");
+var age = getColumn("Formula One World Champions", "Age");
+var worldChampionImage = getColumn("Formula One World Champions", "Image");
+var currentWorldChampion = getText("worldChampionNameText");
+
+
+var filteredName = [];
+var filteredYear = [];
+var filteredTeam = [];
+var filteredAge = [];
+var filteredImage = [];
+
+onEvent("findWorldChampionButton", "click", function( ){
+  setScreen("worldChampionInfoScreen");
+  getDifferentWorldChampions();
+  updateScreen();
+});
+
+function getDifferentWorldChampions() {
+  for (var i = 0; i < worldChampionName.length; i++) {
+      appendItem(filteredName, worldChampionName[i]);
+      appendItem(filteredYear, year[i]);
+      appendItem(filteredTeam, team[i]);
+      appendItem(filteredAge, age[i]);
+      appendItem(filteredImage, worldChampionImage[i]);
+  }
+}
+
+function updateScreen(index){
+  index = randomNumber(0, filteredName.length - 1);
+  setText("worldChampionNameText", filteredName[index]);
+  setText("yearText", filteredYear[index]);
+  setText("teamText", filteredTeam[index]);
+  setText("ageText", filteredAge[index]);
+  setProperty("worldChampionImage", "image", filteredImage[index]);
+  if(index == currentWorldChampion){
+      index = index + 1;
+    } 
+}
+
+onEvent("nextButton", "click", function( ) {
+  setScreen("formulaOneInfoScreen");
+});
+
+onEvent("goBackButton", "click", function( ) {
+  setScreen("formulaOneInfoScreen");
+});
+
+//All images come from https://en.wikipedia.org
